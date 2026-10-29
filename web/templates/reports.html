@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+{% block title %}Reports – Canteen Management System{% endblock %}
+{% block page_title %}Reports & Analytics{% endblock %}
+{% block page_sub %}Live sales aggregations & financial insights{% endblock %}
+
+{% block content %}
+<!-- Revenue Rule Banner -->
+<div class="notice-banner success mb-5">
+  <span>⚖️</span>
+  <span><strong>Revenue Accounting Rule:</strong> Revenue counts only Completed orders with Paid payments. Cancelled, unpaid, and refunded orders are excluded.</span>
+</div>
+
+<!-- Tab Navigation -->
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('daily',this)">📅 Daily Sales</button>
+  <button class="tab-btn" onclick="switchTab('popular',this)">⭐ Popular Items</button>
+  <button class="tab-btn" onclick="switchTab('history',this)">📜 Order History</button>
+  <button class="tab-btn" onclick="switchTab('datewise',this)">📊 Date-wise Summary</button>
+</div>
+
+<!-- ── TAB: DAILY SALES ───────────────────────────────────────────────────── -->
+<div id="tab-daily" class="tab-panel active">
+  <div class="filter-bar mb-4">
+    <div class="filter-group"><label>From Date</label>
+      <input id="d_from" class="form-control" type="date"/></div>
+    <div class="filter-group"><label>To Date</label>
+      <input id="d_to" class="form-control" type="date"/></div>
+    <div style="margin-top:auto;display:flex;gap:8px">
+      <button class="btn btn-primary" onclick="loadDailyReport()">⚡ Generate</button>
+      <button class="btn btn-ghost" onclick="clearDates('d_from','d_to',loadDailyReport)">Clear</button>
+    </div>
+  </div>
+
+  <!-- KPI Row -->
+  <div class="kpi-grid mb-5" id="dailyKPI" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi-card"><div class="kpi-icon" style="background:rgba(249,115,22,0.15)">🛒</div>
+      <div class="kpi-info"><div class="kpi-label">Total Orders</div><div class="kpi-value" id="dKpiOrders">—</div></div></div>
+    <div class="kpi-card"><div class="kpi-icon" style="background:rgba(34,197,94,0.15)">💰</div>
+      <div class="kpi-info"><div class="kpi-label">Net Revenue</div><div class="kpi-value" id="dKpiRev">—</div></div></div>
+    <div class="kpi-card"><div class="kpi-icon" style="background:rgba(59,130,246,0.15)">💵</div>
+      <div class="kpi-info"><div class="kpi-label">Cash Collected</div><div class="kpi-value" id="dKpiCash">—</div></div></div>
+    <div class="kpi-card"><div class="kpi-icon" style="background:rgba(168,85,247,0.15)">📱</div>
+      <div class="kpi-info"><div class="kpi-label">UPI Collected</div><div class="kpi-value" id="dKpiUPI">—</div></div></div>
+  </div>
+
+  <div class="table-wrap">
+    <div class="table-header"><h3>Itemized Completed Orders</h3></div>
+    <div id="dailyTable"></div>
+  </div>
+</div>
+
+<!-- ── TAB: POPULAR ITEMS ─────────────────────────────────────────────────── -->
+<div id="tab-popular" class="tab-panel">
+  <div class="filter-bar mb-4">
+    <div class="filter-group"><label>From Date</label>
+      <input id="p_from" class="form-control" type="date"/></div>
+    <div class="filter-group"><label>To Date</label>
+      <input id="p_to" class="form-control" type="date"/></div>
+    <div class="filter-group"><label>Limit</label>
+      <select id="p_limit" class="form-control">
+        <option>5</option><option selected>10</option><option>15</option><option>20</option>
+      </select></div>
+    <div style="margin-top:auto;display:flex;gap:8px">
+      <button class="btn btn-primary" onclick="loadPopular()">⚡ Generate</button>
+      <button class="btn btn-ghost" onclick="clearDates('p_from','p_to',loadPopular)">Clear</button>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="table-wrap">
+      <div class="table-header"><h3>Ranked Menu Items</h3></div>
+      <div id="popularTable"></div>
+    </div>
+    <div class="card">
+      <div class="card-title mb-4">Quantity Sold Chart</div>
+      <div style="position:relative;height:300px">
+        <canvas id="popularChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TAB: ORDER HISTORY ─────────────────────────────────────────────────── -->
+<div id="tab-history" class="tab-panel">
+  <div class="filter-bar mb-4">
+    <div class="filter-group"><label>From Date</label>
+      <input id="h_from" class="form-control" type="date"/></div>
+    <div class="filter-group"><label>To Date</label>
+      <input id="h_to" class="form-control" type="date"/></div>
+    <div class="filter-group"><label>Order Status</label>
+      <select id="h_status" class="form-control">
+        <option value="">All</option>
+        <option>Completed</option><option>Pending</option><option>Preparing</option>
+        <option>Ready</option><option>Cancelled</option>
+      </select></div>
+    <div style="margin-top:auto;display:flex;gap:8px">
+      <button class="btn btn-primary" onclick="loadHistory()">⚡ Generate</button>
+      <button class="btn btn-ghost" onclick="clearDates('h_from','h_to',loadHistory)">Clear</button>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <div class="table-header"><h3>Order Audit Trail</h3></div>
+    <div id="historyTable"></div>
+  </div>
+</div>
+
+<!-- ── TAB: DATE-WISE SUMMARY ─────────────────────────────────────────────── -->
+<div id="tab-datewise" class="tab-panel">
+  <div class="filter-bar mb-4">
+    <div class="filter-group"><label>From Date</label>
+      <input id="dw_from" class="form-control" type="date"/></div>
+    <div class="filter-group"><label>To Date</label>
+      <input id="dw_to" class="form-control" type="date"/></div>
+    <div style="margin-top:auto;display:flex;gap:8px">
+      <button class="btn btn-primary" onclick="loadDatewise()">⚡ Generate</button>
+      <button class="btn btn-ghost" onclick="clearDates('dw_from','dw_to',loadDatewise)">Clear</button>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="table-wrap">
+      <div class="table-header"><h3>Daily Breakdown</h3></div>
+      <div id="datewiseTable"></div>
+    </div>
+    <div class="card">
+      <div class="card-title mb-4">Daily Revenue Trend (₹)</div>
+      <div style="position:relative;height:300px">
+        <canvas id="datewiseChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+let popChart = null, dwChart = null;
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+function clearDates(f, t, fn) {
+  document.getElementById(f).value = '';
+  document.getElementById(t).value = '';
+  fn();
+}
+
+function dateParams(f, t) {
+  let q = '';
+  const fv = document.getElementById(f).value;
+  const tv = document.getElementById(t).value;
+  if (fv) q += `from=${fv}&`;
+  if (tv) q += `to=${tv}&`;
+  return q;
+}
+
+// ── Daily ─────────────────────────────────────────────────────────────────
+async function loadDailyReport() {
+  try {
+    const data = await api('GET', '/api/reports/daily?' + dateParams('d_from','d_to'));
+    const m = data.metrics || {};
+    document.getElementById('dKpiOrders').textContent = m.total_orders || 0;
+    document.getElementById('dKpiRev').textContent    = '₹' + parseFloat(m.net_revenue||0).toFixed(2);
+    document.getElementById('dKpiCash').textContent   = '₹' + parseFloat(m.cash_total||0).toFixed(2);
+    document.getElementById('dKpiUPI').textContent    = '₹' + parseFloat(m.upi_total||0).toFixed(2);
+
+    const cols = [
+      { key: 'order_id',       label: 'Order #' },
+      { key: 'formatted_dt',   label: 'Date & Time' },
+      { key: 'customer_name',  label: 'Customer' },
+      { key: 'employee_name',  label: 'Staff' },
+      { key: 'total_amount',   label: 'Total', render: v => `<span class="fw-700 text-primary-c">₹${parseFloat(v).toFixed(2)}</span>` },
+      { key: 'payment_method', label: 'Method' },
+      { key: 'payment_status', label: 'Payment', render: v => statusBadge(v) },
+    ];
+    document.getElementById('dailyTable').innerHTML = buildTable(cols, data.rows);
+  } catch (e) { showToast(e.message, 'error'); }
+}
+
+// ── Popular ───────────────────────────────────────────────────────────────
+async function loadPopular() {
+  try {
+    const limit = document.getElementById('p_limit').value;
+    const rows = await api('GET', `/api/reports/popular?${dateParams('p_from','p_to')}limit=${limit}`);
+    const cols = [
+      { key: 'item_name',      label: 'Item', render: v => `<strong>${v}</strong>` },
+      { key: 'category_name',  label: 'Category' },
+      { key: 'price',          label: 'Price', render: v => `₹${parseFloat(v).toFixed(2)}` },
+      { key: 'total_qty_sold', label: 'Qty Sold', render: v => `<span class="fw-700">${v}</span>` },
+      { key: 'total_revenue',  label: 'Revenue', render: v => `<span class="fw-700 text-primary-c">₹${parseFloat(v).toFixed(2)}</span>` },
+    ];
+    document.getElementById('popularTable').innerHTML = buildTable(cols, rows.slice(0,parseInt(limit)));
+
+    // Chart
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const textC = isDark ? '#94A3B8' : '#64748B';
+    const gridC = isDark ? '#334155' : '#E2E8F0';
+    if (popChart) popChart.destroy();
+    const ctx = document.getElementById('popularChart').getContext('2d');
+    popChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: rows.slice(0,10).map(r => r.item_name.length > 14 ? r.item_name.slice(0,14)+'…' : r.item_name),
+        datasets: [{ label: 'Qty Sold', data: rows.slice(0,10).map(r => r.total_qty_sold),
+          backgroundColor: 'rgba(249,115,22,0.75)', borderColor: '#F97316', borderRadius: 5 }]
+      },
+      options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: gridC }, ticks: { color: textC } },
+          y: { grid: { color: gridC }, ticks: { color: textC } },
+        }
+      }
+    });
+  } catch (e) { showToast(e.message, 'error'); }
+}
+
+// ── History ───────────────────────────────────────────────────────────────
+async function loadHistory() {
+  try {
+    const status = document.getElementById('h_status').value;
+    const rows = await api('GET', `/api/reports/history?${dateParams('h_from','h_to')}${status?'status='+status:''}`);
+    const cols = [
+      { key: 'order_id',      label: 'Order #' },
+      { key: 'formatted_dt',  label: 'Date & Time' },
+      { key: 'customer_name', label: 'Customer', render: v => v||'Walk-in' },
+      { key: 'phone',         label: 'Phone', render: v => v||'—' },
+      { key: 'employee_name', label: 'Staff', render: v => v||'Self' },
+      { key: 'order_status',  label: 'Status', render: v => statusBadge(v) },
+      { key: 'payment_status',label: 'Payment', render: v => statusBadge(v||'Unpaid') },
+      { key: 'total_amount',  label: 'Total', render: v => `₹${parseFloat(v).toFixed(2)}` },
+    ];
+    document.getElementById('historyTable').innerHTML = buildTable(cols, rows);
+  } catch (e) { showToast(e.message, 'error'); }
+}
+
+// ── Date-wise ─────────────────────────────────────────────────────────────
+async function loadDatewise() {
+  try {
+    const rows = await api('GET', '/api/reports/datewise?' + dateParams('dw_from','dw_to'));
+    const cols = [
+      { key: 'sales_date',           label: 'Date' },
+      { key: 'total_orders_placed',  label: 'Placed' },
+      { key: 'completed_orders',     label: 'Completed', render: v => `<span class="text-success fw-700">${v}</span>` },
+      { key: 'cancelled_orders',     label: 'Cancelled', render: v => `<span class="text-danger">${v}</span>` },
+      { key: 'net_revenue',          label: 'Net Revenue', render: v => `<span class="fw-700 text-primary-c">₹${parseFloat(v).toFixed(2)}</span>` },
+      { key: 'cash_revenue',         label: 'Cash', render: v => `₹${parseFloat(v).toFixed(2)}` },
+      { key: 'upi_revenue',          label: 'UPI',  render: v => `₹${parseFloat(v).toFixed(2)}` },
+    ];
+    document.getElementById('datewiseTable').innerHTML = buildTable(cols, rows);
+
+    // Chart
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const textC = isDark ? '#94A3B8' : '#64748B';
+    const gridC = isDark ? '#334155' : '#E2E8F0';
+    const recent = rows.slice(-10);
+    if (dwChart) dwChart.destroy();
+    const ctx = document.getElementById('datewiseChart').getContext('2d');
+    dwChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: recent.map(r => String(r.sales_date).slice(5)),
+        datasets: [{
+          label: 'Net Revenue (₹)',
+          data: recent.map(r => parseFloat(r.net_revenue)),
+          backgroundColor: 'rgba(249,115,22,0.75)',
+          borderColor: '#F97316', borderRadius: 5,
+        }]
+      },
+      options: { responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: gridC }, ticks: { color: textC } },
+          y: { grid: { color: gridC }, ticks: { color: textC, callback: v => '₹' + v } },
+        }
+      }
+    });
+  } catch (e) { showToast(e.message, 'error'); }
+}
+
+document.addEventListener('DOMContentLoaded', loadDailyReport);
+</script>
+{% endblock %}

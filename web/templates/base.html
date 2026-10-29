@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Canteen Management System – Modern Web Dashboard"/>
+  <title>{% block title %}Canteen Management System{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+</head>
+<body>
+
+<!-- ── Sidebar ─────────────────────────────────────────────────────────────── -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-icon">🍽️</span>
+    <div class="logo-text">
+      <span class="logo-title">Canteen</span>
+      <span class="logo-sub">Management System</span>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a href="/" class="nav-item {% if active=='dashboard' %}active{% endif %}" id="nav-dashboard">
+      <span class="nav-icon">📊</span><span class="nav-label">Dashboard</span>
+    </a>
+    <div class="nav-section-label">MASTER DATA</div>
+    <a href="/categories" class="nav-item {% if active=='categories' %}active{% endif %}" id="nav-categories">
+      <span class="nav-icon">🏷️</span><span class="nav-label">Categories</span>
+    </a>
+    <a href="/menu-items" class="nav-item {% if active=='menu_items' %}active{% endif %}" id="nav-menu">
+      <span class="nav-icon">🍕</span><span class="nav-label">Menu Items</span>
+    </a>
+    <a href="/customers" class="nav-item {% if active=='customers' %}active{% endif %}" id="nav-customers">
+      <span class="nav-icon">👥</span><span class="nav-label">Customers</span>
+    </a>
+    <a href="/employees" class="nav-item {% if active=='employees' %}active{% endif %}" id="nav-employees">
+      <span class="nav-icon">👨‍💼</span><span class="nav-label">Employees</span>
+    </a>
+    <div class="nav-section-label">OPERATIONS</div>
+    <a href="/orders" class="nav-item {% if active=='orders' %}active{% endif %}" id="nav-orders">
+      <span class="nav-icon">🛒</span><span class="nav-label">Orders & POS</span>
+    </a>
+    <a href="/payments" class="nav-item {% if active=='payments' %}active{% endif %}" id="nav-payments">
+      <span class="nav-icon">💳</span><span class="nav-label">Payments</span>
+    </a>
+    <div class="nav-section-label">ANALYTICS</div>
+    <a href="/reports" class="nav-item {% if active=='reports' %}active{% endif %}" id="nav-reports">
+      <span class="nav-icon">📈</span><span class="nav-label">Reports</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
+      <span class="theme-icon" id="themeIcon">☀️</span>
+      <span class="theme-label" id="themeLabel">Light Mode</span>
+    </div>
+  </div>
+</aside>
+
+<!-- ── Main Content ──────────────────────────────────────────────────────────── -->
+<main class="main-content">
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">☰</button>
+      <div class="page-title-wrap">
+        <h1 class="page-title" id="pageTitle">{% block page_title %}Dashboard{% endblock %}</h1>
+        <span class="page-sub" id="pageSub">{% block page_sub %}{% endblock %}</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="db-status" id="dbStatus" title="Database connection status">
+        <span class="status-dot"></span><span class="status-text">Connecting…</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="content-area">
+    {% block content %}{% endblock %}
+  </div>
+</main>
+
+<!-- ── Toast notification ─────────────────────────────────────────────────── -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ── Modal ──────────────────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+  <div class="modal-box" id="modalBox" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modalTitle">Modal</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer" id="modalFooter"></div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

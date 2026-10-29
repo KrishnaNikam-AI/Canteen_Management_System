@@ -1,0 +1,146 @@
+Order #,Date & Time,Customer,Phone,Staff,Status,Total (Rs),Method,Payment
+163,2026-10-27 14:46,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+162,2026-10-27 14:46,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+161,2026-10-27 14:46,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+160,2026-10-27 14:46,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+159,2026-10-27 14:46,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+158,2026-10-27 14:46,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+153,2026-10-27 14:44,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+152,2026-10-27 14:44,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+154,2026-10-27 14:44,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+155,2026-10-27 14:44,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+156,2026-10-27 14:44,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+151,2026-10-27 14:44,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+148,2026-10-27 14:09,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+149,2026-10-27 14:09,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+147,2026-10-27 14:09,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+146,2026-10-27 14:09,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+145,2026-10-27 14:09,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+144,2026-10-27 14:09,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+141,2026-10-27 13:47,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+140,2026-10-27 13:47,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+139,2026-10-27 13:47,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+138,2026-10-27 13:47,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+142,2026-10-27 13:47,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+137,2026-10-27 13:47,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+132,2026-10-27 13:46,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+131,2026-10-27 13:46,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+133,2026-10-27 13:46,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+134,2026-10-27 13:46,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+135,2026-10-27 13:46,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+130,2026-10-27 13:46,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+124,2026-10-27 13:45,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+125,2026-10-27 13:45,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+126,2026-10-27 13:45,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+127,2026-10-27 13:45,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+128,2026-10-27 13:45,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+123,2026-10-27 13:45,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+117,2026-10-27 13:35,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+118,2026-10-27 13:35,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+119,2026-10-27 13:35,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+120,2026-10-27 13:35,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+121,2026-10-27 13:35,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+116,2026-10-27 13:35,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+110,2026-10-27 13:35,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+111,2026-10-27 13:35,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+112,2026-10-27 13:35,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+113,2026-10-27 13:35,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+114,2026-10-27 13:35,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+109,2026-10-27 13:35,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+103,2026-10-27 13:33,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+104,2026-10-27 13:33,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+105,2026-10-27 13:33,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+106,2026-10-27 13:33,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+107,2026-10-27 13:33,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+102,2026-10-27 13:33,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+96,2026-10-27 13:32,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+97,2026-10-27 13:32,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+98,2026-10-27 13:32,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+99,2026-10-27 13:32,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+100,2026-10-27 13:32,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+95,2026-10-27 13:32,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+89,2026-10-27 13:31,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+90,2026-10-27 13:31,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+91,2026-10-27 13:31,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+92,2026-10-27 13:31,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+93,2026-10-27 13:31,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+88,2026-10-27 13:31,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+86,2026-10-27 13:22,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+85,2026-10-27 13:22,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+84,2026-10-27 13:22,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+83,2026-10-27 13:22,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+82,2026-10-27 13:22,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+81,2026-10-27 13:22,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+79,2026-10-27 13:21,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+78,2026-10-27 13:21,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+77,2026-10-27 13:21,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+76,2026-10-27 13:21,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+75,2026-10-27 13:21,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+74,2026-10-27 13:21,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+69,2026-10-27 13:15,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+70,2026-10-27 13:15,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+71,2026-10-27 13:15,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+72,2026-10-27 13:15,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+68,2026-10-27 13:15,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+67,2026-10-27 13:15,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+66,2026-10-27 13:15,Walk-in,-,Deepak Singh,Completed,200.00,UPI,Paid
+64,2026-10-27 13:07,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+63,2026-10-27 13:07,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+62,2026-10-27 13:07,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+61,2026-10-27 13:07,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+60,2026-10-27 13:07,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+59,2026-10-27 13:07,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+53,2026-10-27 13:06,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+54,2026-10-27 13:06,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+55,2026-10-27 13:06,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+56,2026-10-27 13:06,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+57,2026-10-27 13:06,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+52,2026-10-27 13:06,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+50,2026-10-27 13:02,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+49,2026-10-27 13:02,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+48,2026-10-27 13:02,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+47,2026-10-27 13:02,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+46,2026-10-27 13:02,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+45,2026-10-27 13:02,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+43,2026-10-27 13:01,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+42,2026-10-27 13:01,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+41,2026-10-27 13:01,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+40,2026-10-27 13:01,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+39,2026-10-27 13:01,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+38,2026-10-27 13:01,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+32,2026-10-27 12:52,Krishna Nikam,9811122233,Ramesh Kumar,Pending,50.00,None,Unpaid
+33,2026-10-27 12:52,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,None,Unpaid
+34,2026-10-27 12:52,Krishna Nikam,9811122233,Ramesh Kumar,Preparing,15.00,None,Unpaid
+35,2026-10-27 12:52,Krishna Nikam,9811122233,Ramesh Kumar,Pending,15.00,UPI,Paid
+36,2026-10-27 12:52,Krishna Nikam,9811122233,Ramesh Kumar,Cancelled,15.00,None,Unpaid
+31,2026-10-27 12:52,Walk-in,-,Suresh Chandra,Completed,30.00,Cash,Paid
+30,2026-10-27 12:10,Krishna Nikam,9811122233,Kavita Devi,Completed,150.00,None,Unpaid
+29,2026-10-27 12:07,Krishna Nikam,9811122233,Deepak Singh,Pending,45.00,None,Unpaid
+28,2026-10-25 12:20,Walk-in,-,Ramesh Kumar,Ready,130.00,Cash,Paid
+27,2026-10-25 12:10,Priya Sharma,9822233344,Deepak Singh,Pending,130.00,UPI,Pending
+26,2026-10-25 12:00,Krishna Nikam,9811122233,Deepak Singh,Preparing,110.00,Cash,Paid
+25,2026-10-25 11:15,Tanvi Reddy,9700011122,Ramesh Kumar,Ready,90.00,UPI,Paid
+24,2026-10-25 09:00,Rohan Desai,9899900011,Ramesh Kumar,Completed,90.00,UPI,Paid
+23,2026-10-24 17:30,Neha Kulkarni,9888899900,Deepak Singh,Cancelled,110.00,UPI,Refunded
+22,2026-10-24 13:45,Vikram Malhotra,9877788899,Ramesh Kumar,Completed,155.00,Cash,Paid
+21,2026-10-24 10:30,Prof. Sunita Rao,9866677788,Ramesh Kumar,Completed,75.00,UPI,Paid
+20,2026-10-23 16:00,Walk-in,-,Deepak Singh,Cancelled,90.00,Cash,Refunded
+19,2026-10-23 12:15,Ananya Iyer,9844455566,Deepak Singh,Completed,140.00,UPI,Paid
+18,2026-10-22 13:00,Rahul Verma,9833344455,Ramesh Kumar,Completed,140.00,Cash,Paid
+17,2026-10-22 10:00,Priya Sharma,9822233344,Ramesh Kumar,Completed,95.00,UPI,Paid
+16,2026-10-21 15:30,Walk-in,-,Deepak Singh,Completed,210.00,UPI,Paid
+15,2026-10-21 11:00,Kunal Joshi,9711122233,Deepak Singh,Completed,70.00,Cash,Paid
+14,2026-10-20 13:40,Dr. R. K. Gupta,9855566677,Ramesh Kumar,Completed,310.00,UPI,Paid
+13,2026-10-20 09:45,Tanvi Reddy,9700011122,Ramesh Kumar,Completed,70.00,UPI,Paid
+12,2026-10-19 14:10,Krishna Nikam,9811122233,Deepak Singh,Completed,150.00,UPI,Paid
+11,2026-10-19 12:30,Rohan Desai,9899900011,Deepak Singh,Completed,105.00,Cash,Paid
+10,2026-10-18 17:00,Walk-in,-,Ramesh Kumar,Completed,135.00,Cash,Paid
+9,2026-10-18 10:15,Neha Kulkarni,9888899900,Ramesh Kumar,Completed,105.00,UPI,Paid
+8,2026-10-17 13:15,Vikram Malhotra,9877788899,Deepak Singh,Completed,110.00,UPI,Paid
+7,2026-10-17 09:30,Ananya Iyer,9844455566,Deepak Singh,Completed,60.00,Cash,Paid
+6,2026-10-16 14:00,Prof. Sunita Rao,9866677788,Ramesh Kumar,Completed,145.00,UPI,Paid
+5,2026-10-16 11:20,Rahul Verma,9833344455,Ramesh Kumar,Completed,95.00,UPI,Paid
+4,2026-10-15 16:45,Walk-in,-,Deepak Singh,Completed,80.00,Cash,Paid
+3,2026-10-15 10:00,Priya Sharma,9822233344,Deepak Singh,Completed,85.00,UPI,Paid
+2,2026-10-14 13:30,Dr. R. K. Gupta,9855566677,Ramesh Kumar,Completed,150.00,UPI,Paid
+1,2026-10-14 09:15,Krishna Nikam,9811122233,Ramesh Kumar,Completed,75.00,Cash,Paid

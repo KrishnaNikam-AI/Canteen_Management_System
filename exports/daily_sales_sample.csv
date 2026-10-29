@@ -1,0 +1,43 @@
+Order #,Date & Time,Customer,Staff,Total (Rs),Payment Method,Status,Items
+158,2026-10-27 14:46,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+151,2026-10-27 14:44,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+144,2026-10-27 14:09,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+137,2026-10-27 13:47,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+130,2026-10-27 13:46,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+123,2026-10-27 13:45,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+116,2026-10-27 13:35,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+109,2026-10-27 13:35,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+102,2026-10-27 13:33,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+95,2026-10-27 13:32,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+88,2026-10-27 13:31,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+81,2026-10-27 13:22,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+74,2026-10-27 13:21,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+67,2026-10-27 13:15,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+66,2026-10-27 13:15,Walk-in Customer,Deepak Singh,200.00,UPI,Paid,1
+59,2026-10-27 13:07,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+52,2026-10-27 13:06,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+45,2026-10-27 13:02,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+38,2026-10-27 13:01,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+31,2026-10-27 12:52,Walk-in Customer,Suresh Chandra,30.00,Cash,Paid,1
+24,2026-10-25 09:00,Rohan Desai,Ramesh Kumar,90.00,UPI,Paid,2
+22,2026-10-24 13:45,Vikram Malhotra,Ramesh Kumar,155.00,Cash,Paid,2
+21,2026-10-24 10:30,Prof. Sunita Rao,Ramesh Kumar,75.00,UPI,Paid,2
+19,2026-10-23 12:15,Ananya Iyer,Deepak Singh,140.00,UPI,Paid,2
+18,2026-10-22 13:00,Rahul Verma,Ramesh Kumar,140.00,Cash,Paid,2
+17,2026-10-22 10:00,Priya Sharma,Ramesh Kumar,95.00,UPI,Paid,3
+16,2026-10-21 15:30,Walk-in Customer,Deepak Singh,210.00,UPI,Paid,2
+15,2026-10-21 11:00,Kunal Joshi,Deepak Singh,70.00,Cash,Paid,2
+14,2026-10-20 13:40,Dr. R. K. Gupta,Ramesh Kumar,310.00,UPI,Paid,2
+13,2026-10-20 09:45,Tanvi Reddy,Ramesh Kumar,70.00,UPI,Paid,2
+12,2026-10-19 14:10,Krishna Nikam,Deepak Singh,150.00,UPI,Paid,2
+11,2026-10-19 12:30,Rohan Desai,Deepak Singh,105.00,Cash,Paid,2
+10,2026-10-18 17:00,Walk-in Customer,Ramesh Kumar,135.00,Cash,Paid,2
+9,2026-10-18 10:15,Neha Kulkarni,Ramesh Kumar,105.00,UPI,Paid,2
+8,2026-10-17 13:15,Vikram Malhotra,Deepak Singh,110.00,UPI,Paid,2
+7,2026-10-17 09:30,Ananya Iyer,Deepak Singh,60.00,Cash,Paid,2
+6,2026-10-16 14:00,Prof. Sunita Rao,Ramesh Kumar,145.00,UPI,Paid,2
+5,2026-10-16 11:20,Rahul Verma,Ramesh Kumar,95.00,UPI,Paid,2
+4,2026-10-15 16:45,Walk-in Customer,Deepak Singh,80.00,Cash,Paid,2
+3,2026-10-15 10:00,Priya Sharma,Deepak Singh,85.00,UPI,Paid,2
+2,2026-10-14 13:30,Dr. R. K. Gupta,Ramesh Kumar,150.00,UPI,Paid,2
+1,2026-10-14 09:15,Krishna Nikam,Ramesh Kumar,75.00,Cash,Paid,2

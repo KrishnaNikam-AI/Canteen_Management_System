@@ -1,0 +1,326 @@
+{% extends "base.html" %}
+{% block title %}Orders & POS – Canteen Management System{% endblock %}
+{% block page_title %}Orders & POS{% endblock %}
+{% block page_sub %}Point of Sale checkout and order lifecycle management{% endblock %}
+
+{% block content %}
+<!-- Tab Navigation -->
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('pos')">🛒 New Order (POS)</button>
+  <button class="tab-btn" onclick="switchTab('list')">📋 Orders List & Status</button>
+</div>
+
+<!-- ── TAB 1: POS ──────────────────────────────────────────────────────────── -->
+<div id="tab-pos" class="tab-panel active">
+  <div class="pos-grid">
+    <!-- Left: Item Picker -->
+    <div>
+      <!-- Order Info -->
+      <div class="card mb-4">
+        <div class="card-title mb-4">Order Information</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="form-group" style="margin:0">
+            <label class="form-label">Customer</label>
+            <select id="posCustomer" class="form-control"></select>
+          </div>
+          <div class="form-group" style="margin:0">
+            <label class="form-label">Handled By</label>
+            <select id="posEmployee" class="form-control"></select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item Picker -->
+      <div class="card mb-4">
+        <div class="card-title mb-4">Add Menu Items</div>
+        <div style="display:grid;grid-template-columns:2fr 120px 120px auto;gap:10px;align-items:flex-end">
+          <div class="form-group" style="margin:0">
+            <label class="form-label">Menu Item</label>
+            <select id="posItem" class="form-control" onchange="updatePrice()"></select>
+          </div>
+          <div class="form-group" style="margin:0">
+            <label class="form-label">Unit Price</label>
+            <input id="posPrice" class="form-control" readonly placeholder="₹0.00" style="background:var(--bg-card-alt)"/>
+          </div>
+          <div class="form-group" style="margin:0">
+            <label class="form-label">Quantity</label>
+            <input id="posQty" class="form-control" type="number" min="1" value="1"/>
+          </div>
+          <button class="btn btn-primary" onclick="addToCart()" style="height:38px">➕ Add</button>
+        </div>
+      </div>
+
+      <!-- Cart Table -->
+      <div class="table-wrap">
+        <div class="table-header"><h3>Current Cart</h3></div>
+        <div id="cartTable"><div class="empty-state"><div class="empty-icon">🛒</div><p>Cart is empty</p></div></div>
+        <div class="cart-total-row">
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-ghost btn-sm" onclick="removeFromCart()">🗑️ Remove Selected</button>
+            <button class="btn btn-ghost btn-sm" onclick="clearCart()">✖ Clear All</button>
+          </div>
+          <div>
+            <span class="grand-total" id="grandTotal">Grand Total: ₹0.00</span>
+            <button class="btn btn-primary btn-lg" style="margin-left:16px" onclick="placeOrder()" id="placeOrderBtn">✅ Place Order</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Quick Info -->
+    <div>
+      <div class="card">
+        <div class="card-title mb-4">📋 How to Create an Order</div>
+        <ol style="color:var(--text-secondary);font-size:13px;line-height:2;padding-left:18px">
+          <li>Select customer and cashier above</li>
+          <li>Pick a menu item and quantity</li>
+          <li>Click <strong>Add</strong> to add to cart</li>
+          <li>Review cart total</li>
+          <li>Click <strong>Place Order</strong></li>
+        </ol>
+        <div class="notice-banner info" style="margin-top:14px">
+          <span>ℹ️</span>
+          <span>After placing, go to the <strong>Payments</strong> page to record payment.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TAB 2: Orders List ─────────────────────────────────────────────────── -->
+<div id="tab-list" class="tab-panel">
+  <div class="filter-bar">
+    <div class="filter-group">
+      <label>Search</label>
+      <input id="ordSearch" class="form-control" placeholder="Order# or Customer…" oninput="loadOrders()"/>
+    </div>
+    <div class="filter-group">
+      <label>Order Status</label>
+      <select id="ordStatus" class="form-control" onchange="loadOrders()">
+        <option value="">All</option>
+        <option>Pending</option><option>Preparing</option>
+        <option>Ready</option><option>Completed</option><option>Cancelled</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Payment</label>
+      <select id="ordPay" class="form-control" onchange="loadOrders()">
+        <option value="">All</option>
+        <option>Paid</option><option>Unpaid</option><option>Refunded</option>
+      </select>
+    </div>
+    <div style="margin-top:auto">
+      <button class="btn btn-primary" onclick="loadOrders()">🔍 Filter</button>
+      <button class="btn btn-ghost" onclick="resetOrdFilters()" style="margin-left:6px">Show All</button>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;align-items:start">
+    <!-- Orders Table -->
+    <div class="table-wrap">
+      <div class="table-header"><h3>Orders Directory</h3></div>
+      <div id="ordersTable"><div style="padding:32px;text-align:center;color:var(--text-muted)">Loading…</div></div>
+    </div>
+
+    <!-- Order Detail Panel -->
+    <div class="detail-panel" id="detailPanel">
+      <div class="card-title mb-4">Order Details & Actions</div>
+      <p class="text-muted fs-12">Click an order row to view its details and update status.</p>
+      <div id="detailContent" style="display:none">
+        <div class="detail-header" id="detailHeader"></div>
+        <div class="section-title mb-4">Itemized Breakdown</div>
+        <div id="itemsTable"></div>
+        <div class="section-title mb-4" style="margin-top:14px">Update Status</div>
+        <p class="text-muted fs-12" id="currentStatus"></p>
+        <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+          <select id="nextStatus" class="form-control" style="flex:1;min-width:130px"></select>
+          <button class="btn btn-info btn-sm" onclick="applyStatus()">💾 Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let cart = [];
+let itemsMap = {};
+let selectedOrderId = null;
+let allowedTransitions = {};
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+  if (tab === 'list') loadOrders();
+}
+
+// ── POS ─────────────────────────────────────────────────────────────────────
+async function initPOS() {
+  const [dd, tr] = await Promise.all([
+    api('GET', '/api/orders/dropdown-data'),
+    api('GET', '/api/orders/allowed-transitions'),
+  ]);
+  allowedTransitions = tr;
+
+  const custSel = document.getElementById('posCustomer');
+  custSel.innerHTML = '<option value="">Walk-in Customer</option>';
+  dd.customers.forEach(c => custSel.add(new Option(`${c.customer_name} (${c.phone})`, c.customer_id)));
+
+  const empSel = document.getElementById('posEmployee');
+  empSel.innerHTML = '<option value="">Self Service</option>';
+  dd.employees.forEach(e => empSel.add(new Option(`${e.employee_name} (${e.role})`, e.employee_id)));
+
+  const itemSel = document.getElementById('posItem');
+  itemSel.innerHTML = '';
+  dd.menu_items.forEach(i => {
+    itemsMap[i.item_id] = i;
+    itemSel.add(new Option(`${i.item_name} – ₹${parseFloat(i.price).toFixed(2)} [${i.category_name}]`, i.item_id));
+  });
+  updatePrice();
+}
+
+function updatePrice() {
+  const id = document.getElementById('posItem').value;
+  const it = itemsMap[id];
+  document.getElementById('posPrice').value = it ? '₹' + parseFloat(it.price).toFixed(2) : '₹0.00';
+}
+
+function addToCart() {
+  const id  = parseInt(document.getElementById('posItem').value);
+  const qty = parseInt(document.getElementById('posQty').value);
+  const it  = itemsMap[id];
+  if (!it || qty < 1) { showToast('Select a valid item and quantity', 'warning'); return; }
+
+  const existing = cart.find(c => c.item_id === id);
+  if (existing) { existing.quantity += qty; existing.subtotal = existing.quantity * existing.price; }
+  else cart.push({ item_id: id, item_name: it.item_name, price: parseFloat(it.price), quantity: qty, subtotal: parseFloat(it.price) * qty });
+  renderCart();
+}
+
+function removeFromCart() {
+  const sel = document.querySelector('#cartTable tbody tr.selected-row');
+  if (!sel) { showToast('Select a row to remove', 'warning'); return; }
+  const idx = parseInt(sel.dataset.idx);
+  cart.splice(idx, 1);
+  renderCart();
+}
+
+function clearCart() { cart = []; renderCart(); }
+
+let selectedCartIdx = null;
+function renderCart() {
+  if (cart.length === 0) {
+    document.getElementById('cartTable').innerHTML = '<div class="empty-state"><div class="empty-icon">🛒</div><p>Cart is empty</p></div>';
+    document.getElementById('grandTotal').textContent = 'Grand Total: ₹0.00';
+    return;
+  }
+  let html = `<div class="table-scroll"><table class="data-table"><thead><tr>
+    <th>Item</th><th>Unit Price</th><th>Qty</th><th>Subtotal</th></tr></thead><tbody>`;
+  let total = 0;
+  cart.forEach((c, i) => {
+    total += c.subtotal;
+    html += `<tr data-idx="${i}" onclick="selectCartRow(this)" style="cursor:pointer">
+      <td><strong>${c.item_name}</strong></td>
+      <td>₹${c.price.toFixed(2)}</td>
+      <td>${c.quantity}</td>
+      <td class="fw-700 text-primary-c">₹${c.subtotal.toFixed(2)}</td></tr>`;
+  });
+  html += '</tbody></table></div>';
+  document.getElementById('cartTable').innerHTML = html;
+  document.getElementById('grandTotal').textContent = `Grand Total: ₹${total.toFixed(2)}`;
+}
+
+function selectCartRow(row) {
+  document.querySelectorAll('#cartTable tbody tr').forEach(r => r.classList.remove('selected-row'));
+  row.classList.add('selected-row');
+  row.style.background = 'rgba(249,115,22,0.1)';
+}
+
+async function placeOrder() {
+  if (cart.length === 0) { showToast('Cart is empty!', 'warning'); return; }
+  const btn = document.getElementById('placeOrderBtn');
+  btn.disabled = true; btn.textContent = '⏳ Placing…';
+  try {
+    const result = await api('POST', '/api/orders', {
+      customer_id: document.getElementById('posCustomer').value || null,
+      employee_id: document.getElementById('posEmployee').value || null,
+      items: cart.map(c => ({ item_id: c.item_id, quantity: c.quantity })),
+    });
+    showToast(`🎉 Order #${result.order_id} placed! Total: ₹${result.total_amount.toFixed(2)}`, 'success', 5000);
+    clearCart();
+    switchTab('list');
+    loadOrders();
+  } catch (e) { showToast(e.message, 'error'); }
+  finally { btn.disabled = false; btn.textContent = '✅ Place Order'; }
+}
+
+// ── Orders List ──────────────────────────────────────────────────────────────
+async function loadOrders() {
+  const q  = document.getElementById('ordSearch').value;
+  const st = document.getElementById('ordStatus').value;
+  const py = document.getElementById('ordPay').value;
+  let url = `/api/orders?q=${encodeURIComponent(q)}&status=${st}&payment=${py}`;
+  try {
+    const rows = await api('GET', url);
+    const cols = [
+      { key: 'order_id',  label: '#' },
+      { key: 'dt',        label: 'Date & Time' },
+      { key: 'customer',  label: 'Customer' },
+      { key: 'order_status', label: 'Status', render: v => statusBadge(v) },
+      { key: 'total_amount', label: 'Total', render: v => `<span class="fw-700 text-primary-c">₹${parseFloat(v).toFixed(2)}</span>` },
+      { key: 'payment_status', label: 'Payment', render: v => statusBadge(v) },
+    ];
+    document.getElementById('ordersTable').innerHTML = buildTable(cols, rows, r =>
+      `<button class="btn btn-ghost btn-sm" onclick="selectOrder(${r.order_id},'${r.order_status}','${r.total_amount}','${r.payment_status}')">🔍 Details</button>`
+    );
+  } catch (e) { showToast(e.message, 'error'); }
+}
+
+async function selectOrder(id, status, total, payStatus) {
+  selectedOrderId = id;
+  document.getElementById('detailContent').style.display = 'block';
+  document.getElementById('detailHeader').textContent =
+    `Order #${id}  •  Total: ₹${parseFloat(total).toFixed(2)}  •  Status: ${status}  •  Payment: ${payStatus}`;
+  document.getElementById('currentStatus').textContent = `Current Status: ${status}`;
+
+  const items = await api('GET', `/api/orders/${id}/items`);
+  const cols = [
+    { key: 'item_name',  label: 'Item' },
+    { key: 'unit_price', label: 'Price', render: v => `₹${parseFloat(v).toFixed(2)}` },
+    { key: 'quantity',   label: 'Qty' },
+    { key: 'subtotal',   label: 'Subtotal', render: v => `₹${parseFloat(v).toFixed(2)}` },
+  ];
+  document.getElementById('itemsTable').innerHTML = buildTable(cols, items);
+
+  const allowed = allowedTransitions[status] || [];
+  const sel = document.getElementById('nextStatus');
+  sel.innerHTML = allowed.length
+    ? allowed.map(s => `<option>${s}</option>`).join('')
+    : '<option disabled>Terminal State</option>';
+  document.querySelector('#detailPanel .btn-info').disabled = !allowed.length;
+}
+
+async function applyStatus() {
+  const newStatus = document.getElementById('nextStatus').value;
+  if (!newStatus || !selectedOrderId) return;
+  try {
+    await api('PUT', `/api/orders/${selectedOrderId}/status`, { status: newStatus });
+    showToast(`Order #${selectedOrderId} → ${newStatus}`, 'success');
+    loadOrders();
+    selectOrder(selectedOrderId, newStatus, 0, '—');
+  } catch (e) { showToast(e.message, 'error'); }
+}
+
+function resetOrdFilters() {
+  document.getElementById('ordSearch').value = '';
+  document.getElementById('ordStatus').value = '';
+  document.getElementById('ordPay').value = '';
+  loadOrders();
+}
+
+document.addEventListener('DOMContentLoaded', () => { initPOS(); loadOrders(); });
+</script>
+{% endblock %}

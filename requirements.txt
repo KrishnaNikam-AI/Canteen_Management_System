@@ -1,0 +1,21 @@
+# ==============================================================================
+# Canteen Management System - Python Dependencies (Web Application)
+# ==============================================================================
+# To install these dependencies, run:
+#   pip install -r requirements.txt
+#
+# Note: For college viva explanation:
+# - mysql-connector-python: Official Oracle MySQL driver to execute SQL queries
+# - python-dotenv: Loads database credentials from .env file securely
+# - Flask: Web framework routing HTTP requests, serving HTML templates, and REST APIs
+# - flask-cors: Cross-Origin Resource Sharing middleware for Flask
+# - reportlab: Generates downloadable/printable PDF receipts and sales reports
+# - pytest: Runs automated unit tests for business logic and web endpoints
+# ==============================================================================
+
+mysql-connector-python>=8.0.33
+python-dotenv>=1.0.0
+Flask>=2.3.0
+flask-cors>=4.0.0
+reportlab>=4.0.0
+pytest>=7.4.0

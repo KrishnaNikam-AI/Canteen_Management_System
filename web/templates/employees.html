@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block title %}Employees – Canteen Management System{% endblock %}
+{% block page_title %}Employees{% endblock %}
+{% block page_sub %}Staff management{% endblock %}
+
+{% block content %}
+<div class="filter-bar">
+  <div class="filter-group">
+    <label>Search</label>
+    <input id="searchInput" class="form-control" placeholder="Name, role or phone…" oninput="loadEmployees()"/>
+  </div>
+  <div style="margin-top:auto">
+    <button class="btn btn-primary" onclick="openAddModal()">➕ Add Employee</button>
+  </div>
+</div>
+
+<div class="table-wrap">
+  <div class="table-header">
+    <h3>Staff Directory</h3>
+    <span class="text-muted fs-12" id="countLabel"></span>
+  </div>
+  <div id="tableBody"><div style="padding:32px;text-align:center;color:var(--text-muted)">Loading…</div></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let allEmps = [];
+
+async function loadEmployees() {
+  try {
+    const q = document.getElementById('searchInput').value;
+    allEmps = await api('GET', `/api/employees?q=${encodeURIComponent(q)}`);
+    document.getElementById('countLabel').textContent = allEmps.length + ' employees';
+    const cols = [
+      { key: 'employee_id',   label: '#', render: v => `<span class="text-muted fs-12">${v}</span>` },
+      { key: 'employee_name', label: 'Name', render: v => `<strong>${v}</strong>` },
+      { key: 'role',          label: 'Role', render: v => `<span class="badge badge-info" style="background:var(--info-soft);color:var(--info)">${v}</span>` },
+      { key: 'phone',         label: 'Phone', render: v => v||'—' },
+      { key: 'email',         label: 'Email', render: v => v||'—' },
+      { key: 'is_active',     label: 'Status', render: v => v ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-inactive">Inactive</span>' },
+    ];
+    document.getElementById('tableBody').innerHTML = buildTable(cols, allEmps, r => `
+      <button class="btn btn-ghost btn-sm" onclick="openEditModal(${r.employee_id})">✏️ Edit</button>
+      <button class="btn btn-danger btn-sm" style="margin-left:6px" onclick="deleteEmp(${r.employee_id},'${r.employee_name}')">🗑️</button>
+    `);
+  } catch (e) { showToast(e.message, 'error'); }
+}
+
+function empForm(e = {}) {
+  return `
+    <div class="form-group"><label class="form-label">Full Name *</label>
+      <input id="fName" class="form-control" value="${e.employee_name||''}" placeholder="Employee name"/></div>
+    <div class="form-group"><label class="form-label">Role</label>
+      <select id="fRole" class="form-control">
+        ${['Cashier','Chef','Manager','Waiter','Staff'].map(r =>
+          `<option ${e.role===r?'selected':''}>${r}</option>`).join('')}
+      </select></div>
+    <div class="form-group"><label class="form-label">Phone</label>
+      <input id="fPhone" class="form-control" value="${e.phone||''}"/></div>
+    <div class="form-group"><label class="form-label">Email</label>
+      <input id="fEmail" class="form-control" type="email" value="${e.email||''}"/></div>
+    <div class="form-group"><label class="form-label">Status</label>
+      <select id="fActive" class="form-control">
+        <option value="1" ${e.is_active||1?'selected':''}>Active</option>
+        <option value="0" ${e.is_active===0?'selected':''}>Inactive</option>
+      </select></div>
+  `;
+}
+
+function openAddModal() {
+  openModal('Add Employee', empForm(), `
+    <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+    <button class="btn btn-primary" onclick="saveEmp()">💾 Save</button>
+  `);
+}
+
+function openEditModal(id) {
+  const e = allEmps.find(x => x.employee_id === id);
+  openModal('Edit Employee', `<input type="hidden" id="fId" value="${id}"/>` + empForm(e), `
+    <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+    <button class="btn btn-primary" onclick="saveEmp(true)">💾 Update</button>
+  `);
+}
+
+async function saveEmp(isEdit = false) {
+  const payload = {
+    employee_name: document.getElementById('fName').value.trim(),
+    role:   document.getElementById('fRole').value,
+    phone:  document.getElementById('fPhone').value.trim(),
+    email:  document.getElementById('fEmail').value.trim(),
+    is_active: document.getElementById('fActive').value,
+  };
+  try {
+    if (isEdit) {
+      await api('PUT', `/api/employees/${document.getElementById('fId').value}`, payload);
+      showToast('Employee updated!', 'success');
+    } else {
+      await api('POST', '/api/employees', payload);
+      showToast('Employee added!', 'success');
+    }
+    closeModal(); loadEmployees();
+  } catch (e) { showToast(e.message, 'error'); }
+}
+
+async function deleteEmp(id, name) {
+  openModal('Confirm Delete', `<p>Delete employee <strong>${name}</strong>?</p>`, `
+    <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+    <button class="btn btn-danger" onclick="doDeleteEmp(${id})">🗑️ Delete</button>
+  `);
+}
+
+async function doDeleteEmp(id) {
+  try {
+    await api('DELETE', `/api/employees/${id}`);
+    showToast('Deleted!', 'success'); closeModal(); loadEmployees();
+  } catch (e) { showToast(e.message, 'error'); }
+}
+
+document.addEventListener('DOMContentLoaded', loadEmployees);
+</script>
+{% endblock %}

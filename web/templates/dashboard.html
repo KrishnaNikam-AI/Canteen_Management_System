@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block title %}Dashboard – Canteen Management System{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block page_sub %}Live KPI metrics & analytics{% endblock %}
+
+{% block content %}
+<!-- KPI Grid -->
+<div class="kpi-grid" id="kpiGrid">
+  <div class="kpi-card">
+    <div class="kpi-icon" style="background:rgba(249,115,22,0.15)">💰</div>
+    <div class="kpi-info">
+      <div class="kpi-label">Today's Revenue</div>
+      <div class="kpi-value" id="kpiRevenue">—</div>
+    </div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-icon" style="background:rgba(59,130,246,0.15)">🛒</div>
+    <div class="kpi-info">
+      <div class="kpi-label">Orders Today</div>
+      <div class="kpi-value" id="kpiOrders">—</div>
+    </div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-icon" style="background:rgba(34,197,94,0.15)">🍕</div>
+    <div class="kpi-info">
+      <div class="kpi-label">Active Menu Items</div>
+      <div class="kpi-value" id="kpiItems">—</div>
+    </div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-icon" style="background:rgba(245,158,11,0.15)">⏳</div>
+    <div class="kpi-info">
+      <div class="kpi-label">Pending Orders</div>
+      <div class="kpi-value" id="kpiPending">—</div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Grid -->
+<div class="dash-grid">
+  <!-- Recent Orders Table -->
+  <div class="table-wrap">
+    <div class="table-header">
+      <h3>Recent Orders</h3>
+      <a href="/orders" class="btn btn-ghost btn-sm">View All →</a>
+    </div>
+    <div id="recentOrdersTable">
+      <div style="padding:24px;text-align:center;color:var(--text-muted)">Loading…</div>
+    </div>
+  </div>
+
+  <!-- Quick Links -->
+  <div>
+    <div class="card mb-4">
+      <div class="card-title mb-4">Quick Actions</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <a href="/orders" class="btn btn-primary">🛒 New Order (POS)</a>
+        <a href="/payments" class="btn btn-ghost">💳 Record Payment</a>
+        <a href="/menu-items" class="btn btn-ghost">🍕 Add Menu Item</a>
+        <a href="/reports" class="btn btn-ghost">📈 View Reports</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title mb-4">Revenue (Last 7 Days)</div>
+      <canvas id="revenueChart" height="160"></canvas>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+let revenueChart = null;
+
+async function loadDashboard() {
+  try {
+    const d = await api('GET', '/api/dashboard/stats');
+
+    document.getElementById('kpiRevenue').textContent = '₹' + d.today_sales.toFixed(2);
+    document.getElementById('kpiOrders').textContent  = d.today_orders;
+    document.getElementById('kpiItems').textContent   = d.active_items;
+    document.getElementById('kpiPending').textContent = d.pending_orders;
+
+    // Recent orders table
+    const cols = [
+      { key: 'order_id',   label: 'Order #' },
+      { key: 'dt',         label: 'Date & Time' },
+      { key: 'customer',   label: 'Customer' },
+      { key: 'order_status', label: 'Status', render: v => statusBadge(v) },
+      { key: 'total_amount', label: 'Total', render: v => `<span class="fw-700 text-primary-c">₹${parseFloat(v).toFixed(2)}</span>` },
+      { key: 'pay_status', label: 'Payment', render: v => statusBadge(v) },
+    ];
+    document.getElementById('recentOrdersTable').innerHTML =
+      buildTable(cols, d.recent_orders);
+
+    // Revenue chart
+    const labels = d.chart_data.map(r => r.day);
+    const values = d.chart_data.map(r => parseFloat(r.revenue));
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const gridC  = isDark ? '#334155' : '#E2E8F0';
+    const textC  = isDark ? '#94A3B8' : '#64748B';
+    const ctx = document.getElementById('revenueChart').getContext('2d');
+
+    if (revenueChart) revenueChart.destroy();
+    revenueChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Revenue (₹)',
+          data: values,
+          backgroundColor: 'rgba(249,115,22,0.7)',
+          borderColor: '#F97316',
+          borderRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: gridC }, ticks: { color: textC } },
+          y: { grid: { color: gridC }, ticks: { color: textC, callback: v => '₹' + v } },
+        }
+      }
+    });
+
+  } catch (e) {
+    showToast('Failed to load dashboard: ' + e.message, 'error');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadDashboard);
+</script>
+{% endblock %}
